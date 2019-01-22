@@ -40,10 +40,10 @@ class Job
     }
 
     /**
-     * @param \Closure|null $onSuccess
+     * @return Job
      * @throws \Exception
      */
-    public function save(\Closure $onSuccess = null)
+    public function save(): Job
     {
         if (isset($this->options['delay'])) {
             $jobId = $this->queue->evalScript(
@@ -82,9 +82,7 @@ class Job
 //            this.queue.jobs.set(jobId, this);
         }
 
-        if ($onSuccess) {
-            $onSuccess($this);
-        }
+        return $this;
     }
 
     /**

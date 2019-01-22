@@ -1,7 +1,6 @@
 <?php
 /** @noinspection PhpUnhandledExceptionInspection */
 
-use Dynatech\Libraries\BeeQueue\Job;
 use Dynatech\Libraries\BeeQueue\Queue;
 
 require '../vendor/autoload.php';
@@ -19,9 +18,9 @@ try {
         'test' => 'data'
     ]);
 
-    $job->save(function (Job $job) {
-        echo "Saved!: " . $job->getId(). PHP_EOL;
-    });
+    $job->save();
+
+    echo "Saved!: " . $job->getId(). PHP_EOL;
 
 } catch (Throwable $e) {
     var_dump($e);
