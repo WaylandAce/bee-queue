@@ -10,7 +10,7 @@ try {
 
     $queue = new Queue('queueName', [
         'redis' => [
-            'host' => 127.0.0.1,
+            'host' => '127.0.0.1',
             'port' => 6379
         ]
     ]);
