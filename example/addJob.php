@@ -8,9 +8,9 @@ require '../vendor/autoload.php';
 
 try {
 
-    $queue = new Queue('chrome-render-queue', [
+    $queue = new Queue('queueName', [
         'redis' => [
-            'host' => 'redis.sandbox.dyninno.net',
+            'host' => 127.0.0.1,
             'port' => 6379
         ]
     ]);
