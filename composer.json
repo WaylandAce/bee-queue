@@ -1,0 +1,21 @@
+{
+    "name": "dynatech/bee-queue",
+    "description": "PHP handler for bee-queue redis queue",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pavel Kirpitsov",
+            "email": "p.kirpitsov@dyninno.lv"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Dynatech\\Libraries\\BeeQueue\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">7.2.0"
+    }
+}
