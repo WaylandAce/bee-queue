@@ -13,6 +13,5 @@
         "psr-4": {
             "Dynatech\\Libraries\\BeeQueue\\": "src/"
         }
-    },
-    "minimum-stability": "stable"
+    }
 }
