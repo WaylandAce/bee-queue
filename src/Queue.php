@@ -31,9 +31,13 @@ class Queue
         } else {
             $redis['host'] = $redis['host'] ?? '127.0.0.1';
             $redis['port'] = $redis['port'] ?? 6379;
+            $redis['password'] = $redis['password'] ?? false;
 
             $this->redis = new \Redis();
             $this->redis->connect($redis['host'], $redis['port']);
+            if ($redis['password']) {
+                $this->redis->auth($redis['password']);
+            }
         }
 
         $this->settings = [
