@@ -100,4 +100,14 @@ class Queue
     {
         return $this->settings['storeJobs'] === true;
     }
+
+    /**
+     * [destroy description]
+     * @return [type] [description]
+     */
+    public function destroy()
+    {
+        $queueKeys = $this->redis->keys($this->settings['keyPrefix'] . '*');
+        $this->redis->delete($queueKeys);
+    }
 }
