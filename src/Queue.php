@@ -31,9 +31,13 @@ class Queue
         } else {
             $redis['host'] = $redis['host'] ?? '127.0.0.1';
             $redis['port'] = $redis['port'] ?? 6379;
+            $redis['password'] = $redis['password'] ?? false;
 
             $this->redis = new \Redis();
             $this->redis->connect($redis['host'], $redis['port']);
+            if ($redis['password']) {
+                $this->redis->auth($redis['password']);
+            }
         }
 
         $this->settings = [
@@ -95,5 +99,32 @@ class Queue
     public function isStoreJobs(): bool
     {
         return $this->settings['storeJobs'] === true;
+    }
+
+    /**
+     * [destroy description]
+     * @return [type] [description]
+     */
+    public function destroy()
+    {
+        $queueKeys = $this->redis->keys($this->settings['keyPrefix'] . '*');
+        $this->redis->delete($queueKeys);
+    }
+
+    /**
+     * [checkHealth description]
+     * @return [type] [description]
+     */
+    public function checkHealth(): array
+    {
+        $results = [
+            'waiting' => $this->redis->lLen($this->toKey('waiting')) ?? 0,
+            'active' => $this->redis->lLen($this->toKey('active')) ?? 0,
+            'succeeded' => $this->redis->sCard($this->toKey('succeeded')) ?? 0,
+            'failed' => $this->redis->sCard($this->toKey('failed')) ?? 0,
+            'delayed' => $this->redis->zCard($this->toKey('delayed')) ?? 0,
+            'newestJob' => $this->redis->get($this->toKey('id')) ?? 0,
+        ];
+        return $results;
     }
 }
