@@ -110,4 +110,21 @@ class Queue
         $queueKeys = $this->redis->keys($this->settings['keyPrefix'] . '*');
         $this->redis->delete($queueKeys);
     }
+
+    /**
+     * [checkHealth description]
+     * @return [type] [description]
+     */
+    public function checkHealth(): array
+    {
+        $results = [
+            'waiting' => $this->redis->lLen($this->toKey('waiting')) ?? 0,
+            'active' => $this->redis->lLen($this->toKey('active')) ?? 0,
+            'succeeded' => $this->redis->sCard($this->toKey('succeeded')) ?? 0,
+            'failed' => $this->redis->sCard($this->toKey('failed')) ?? 0,
+            'delayed' => $this->redis->zCard($this->toKey('delayed')) ?? 0,
+            'newestJob' => $this->redis->get($this->toKey('id')) ?? 0,
+        ];
+        return $results;
+    }
 }
